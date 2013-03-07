@@ -36,7 +36,7 @@ public class ProfilePage {
          System.out.println();
          Username = u;
          
-         //prompting for password
+         //prompting for password with masking ***
          HidePassword hideThread = new HidePassword();
          hideThread.start();
          String p1 = "";
@@ -62,8 +62,6 @@ public class ProfilePage {
          System.out.println("\b\b"); 
          Password = p1;
          
-         
-         
          //prompting for email
          //who gives a shit about email anyways?
          String e1 = "";
@@ -82,33 +80,57 @@ public class ProfilePage {
             e2 = sc.nextLine(); 
          }
          Email = e1;
+         
          //creating new file for each user
          File f = new File("Users/" + Username + ".txt");
          try{
          f.createNewFile();
-         }catch(Exception e){
-         }
+         }catch(Exception e){}
+         
          //printstreaming info to files
          PrintStream p = new PrintStream("Users/" + Username + ".txt");
          p.println("Username: " + Username);
          p.println("Password: " + Password);
          p.println("E-mail: " + Email);
+         
          //printstream into mailing list
          PrintStream f2 = new PrintStream("MailingList.txt");
          f2.println(Username + " : " + Email);
          
     }
-    public void enterProfile(){
+    public void enterProfile() throws FileNotFoundException{
         System.out.print("Enter username: ");
-        Username = sc.nextLine();
-        checkUsername(Username);
-        System.out.print("Enter password: ");
+        String user = sc.nextLine();
+        boolean newProfileMade = false;
+        while(!checkUsername(user)){
+            System.out.println("Username not found...");
+            System.out.print("Try again(T)? or Create profile(C)? ");
+            String temp = sc.nextLine().toUpperCase();
+            if(temp.equals("T")){
+                System.out.print("\nEnter username: ");
+                user = sc.nextLine();
+            }else if(temp.equals("C")){
+                newProfileMade = true;
+                createProfile();
+                break;
+            }
+        }
+        if(newProfileMade)
+            System.exit(0);
+        Username = user;
+        
+        //User player = new User(Username);
+        //player.getPassword();
+        System.out.print("\nEnter password: ");
         Password = sc.nextLine();
         checkPassword(Password);
         System.out.println("Arranging profile page...");
     }
     public boolean checkUsername(String u){
-        return true;
+        File f = new File("Users/"+u+".txt");
+        if(f.exists())
+           return true;
+        return false;
     }
     public boolean checkPassword(String p){
     	  return false;
@@ -123,6 +145,7 @@ public class ProfilePage {
     	  	return true;
         return false;
     }
+    
     private class HidePassword extends Thread {
         boolean stopThread= false;
         boolean hideInput= false;
@@ -136,8 +159,7 @@ public class ProfilePage {
             while (!stopThread) {
                 if (hideInput) {
                     System.out.print("\b*");
-                }
-                try {
+                }try {
                     sleep(1);
                 }catch (InterruptedException e) {}
             }             
