@@ -115,16 +115,24 @@ public class ProfilePage {
                 break;
             }
         }
-        if(newProfileMade)
-            System.exit(0);
         Username = user;
-        
-        //User player = new User(Username);
-        //player.getPassword();
-        System.out.print("\nEnter password: ");
-        Password = sc.nextLine();
-        checkPassword(Password);
-        System.out.println("Arranging profile page...");
+        if(!newProfileMade){
+            HidePassword hideThread = new HidePassword();
+            hideThread.start();
+            try {
+                hideThread.hideInput = true;
+                System.out.print("Enter password: ");
+                Password = sc.nextLine();
+                while(!checkPassword(Username, Password)){
+                    System.out.println("Invalid password");
+                    System.out.print("Enter password: ");
+                    Password = sc.nextLine();
+                }
+                hideThread.stopThread = true;
+            }catch (Exception e) {}
+        System.out.println("\b\b");
+        System.out.println("Arranging profile page..."); 
+        }
     }
     public boolean checkUsername(String u){
         File f = new File("Users/"+u+".txt");
@@ -132,8 +140,18 @@ public class ProfilePage {
            return true;
         return false;
     }
-    public boolean checkPassword(String p){
-    	  return false;
+    
+    public boolean checkPassword(String u, String p) throws FileNotFoundException{
+          String temp = "";
+          Scanner test = new Scanner(new File("Users/" + u + ".txt"));
+          while(test.hasNext()){
+                temp += test.next() + " ";
+          }
+          for(int i = 0;i<temp.length();i++){
+                if(temp.contains(u) && temp.contains(p))
+                        return true;
+          }
+          return false;
     }
     public boolean checkEmail(String e1, String e2){
     	  if(e1.equals(e2)&&e1.contains("@"))
