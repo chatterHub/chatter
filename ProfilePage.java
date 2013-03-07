@@ -10,11 +10,11 @@ public class ProfilePage {
     
     public ProfilePage() throws FileNotFoundException{
         sc = new Scanner(System.in);
-        System.out.print("Are you a new user? (yes/no) ");
+        System.out.print("\nAre you a new user? (yes/no) ");
         String yn = sc.nextLine().toLowerCase();
         while(!yn.equals("yes") && !yn.equals("y") 
             && !yn.equals("no") && !yn.equals("n")){
-                System.out.println(yn+" Is incorrect input, try again....");
+                System.out.println(yn+" is incorrect input, try again....");
                 System.out.print("Are you a new user? (yes/no) ");
                 yn = sc.nextLine().toLowerCase();
         }if(yn.equals("yes") || yn.equals("y"))
@@ -26,22 +26,27 @@ public class ProfilePage {
     
     public void createProfile() throws FileNotFoundException {
 	   //prompting for username
-         System.out.print("What would you like your username to be? ");
+         System.out.print("\nWhat would you like your username to be? ");
          String u = sc.nextLine();
          while(!checkUsername(u)){
          	System.out.println("This username is already being used.");
-         	System.out.println();
          	System.out.print("What would you like your username to be? ");
          	u = sc.nextLine();
          }
+         System.out.println();
          Username = u;
+         
          //prompting for password
+         HidePassword hideThread = new HidePassword();
+         hideThread.start();
          String p1 = "";
          String p2 = "";
-         System.out.print("What would you like your password to be? ");
-         p1 = sc.nextLine();
-         System.out.print("Verify password: ");
-         p2 = sc.nextLine(); 
+         try {
+            hideThread.hideInput = true;
+            System.out.print("Enter a password: ");
+            p1 = sc.nextLine();
+            System.out.print("Verify password: ");
+            p2 = sc.nextLine(); 
          while(!checkNewPassword(p1,p2)){
          	p1 = "";
          	p2 = "";
@@ -50,8 +55,15 @@ public class ProfilePage {
             p1 = sc.nextLine();
             System.out.print("Verify password: ");
             p2 = sc.nextLine(); 
+         }         
+         hideThread.stopThread= true;
          }
+         catch (Exception e) {}
+         System.out.println("\b\b"); 
          Password = p1;
+         
+         
+         
          //prompting for email
          //who gives a shit about email anyways?
          String e1 = "";
@@ -111,30 +123,24 @@ public class ProfilePage {
     	  	return true;
         return false;
     }
-    private class EraserThread implements Runnable {
-        
-        private boolean stop;
-
-         /**
-         *@param The prompt displayed to the user
-         */
-        public EraserThread(String prompt) {
-        System.out.print(prompt);
-        }
-
-        /**
-        * Begin masking...display asterisks (*)
-        */
-        public void run () {
-            stop = true;
-            while (stop) {
-                System.out.print("\010*");
-                try {
-                    Thread.currentThread().sleep(1);
-                }catch(InterruptedException ie) {
-                    ie.printStackTrace();
+    private class HidePassword extends Thread {
+        boolean stopThread= false;
+        boolean hideInput= false;
+        boolean shortMomentGone= false;
+  
+        public void run() {
+            try {
+                sleep(500);
+            }catch (InterruptedException e) {}
+            shortMomentGone= true;
+            while (!stopThread) {
+                if (hideInput) {
+                    System.out.print("\b*");
                 }
-            }
-        }
+                try {
+                    sleep(1);
+                }catch (InterruptedException e) {}
+            }             
+        } 
     }
 }
