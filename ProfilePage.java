@@ -7,6 +7,7 @@ public class ProfilePage {
     private String Username;
     private String Password;
     private String Email;
+    protected boolean userLoggedIn;
     
     public ProfilePage() throws FileNotFoundException{
         sc = new Scanner(System.in);
@@ -28,7 +29,7 @@ public class ProfilePage {
 	   //prompting for username
          System.out.print("\nWhat would you like your username to be? ");
          String u = sc.nextLine();
-         while(!checkUsername(u)){
+         while(checkUsername(u)){
          	System.out.println("This username is already being used.");
          	System.out.print("What would you like your username to be? ");
          	u = sc.nextLine();
@@ -97,25 +98,30 @@ public class ProfilePage {
          PrintStream f2 = new PrintStream("MailingList.txt");
          f2.println(Username + " : " + Email);
          
+         System.out.println("Profile sucessfully created");
     }
     public void enterProfile() throws FileNotFoundException{
         System.out.print("Enter username: ");
-        String user = sc.nextLine();
+        String u = sc.nextLine();
         boolean newProfileMade = false;
-        while(!checkUsername(user)){
+        while(!checkUsername(u)){
             System.out.println("Username not found...");
             System.out.print("Try again(T)? or Create profile(C)? ");
             String temp = sc.nextLine().toUpperCase();
-            if(temp.equals("T")){
+            while(!temp.equals("T") && !temp.equals("C")){
+                System.out.println(temp +" is not (T) or (C)...");
+                System.out.print("Try again(T)? or Create profile(C)? ");
+                temp= sc.nextLine().toUpperCase();
+            }if(temp.equals("T")){
                 System.out.print("\nEnter username: ");
-                user = sc.nextLine();
+                u = sc.nextLine();
             }else if(temp.equals("C")){
                 newProfileMade = true;
                 createProfile();
                 break;
-            }
+            } 
         }
-        Username = user;
+        Username = u;
         if(!newProfileMade){
             HidePassword hideThread = new HidePassword();
             hideThread.start();
@@ -131,15 +137,17 @@ public class ProfilePage {
                 hideThread.stopThread = true;
             }catch (Exception e) {}
         System.out.println("\b\b");
+        userLoggedIn = true;
         System.out.println("Arranging profile page..."); 
         }
     }
-    public boolean checkUsername(String u){
+     public boolean checkUsername(String u) throws FileNotFoundException{
         File f = new File("Users/"+u+".txt");
-        if(f.exists())
-           return true;
+        if(f.exists()){
+            return true;
+        }
         return false;
-    }
+     }
     
     public boolean checkPassword(String u, String p) throws FileNotFoundException{
           String temp = "";
