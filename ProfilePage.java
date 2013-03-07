@@ -100,22 +100,26 @@ public class ProfilePage {
     }
     public void enterProfile() throws FileNotFoundException{
         System.out.print("Enter username: ");
-        String user = sc.nextLine();
+        String u = sc.nextLine();
         boolean newProfileMade = false;
-        while(!checkUsername(user)){
+        while(!checkUsername(u)){
             System.out.println("Username not found...");
             System.out.print("Try again(T)? or Create profile(C)? ");
             String temp = sc.nextLine().toUpperCase();
-            if(temp.equals("T")){
+            while(!temp.equals("T") && !temp.equals("C")){
+                System.out.println(temp +" is not (T) or (C)...");
+                System.out.print("Try again(T)? or Create profile(C)? ");
+                temp= sc.nextLine().toUpperCase();
+            }if(temp.equals("T")){
                 System.out.print("\nEnter username: ");
-                user = sc.nextLine();
+                u = sc.nextLine();
             }else if(temp.equals("C")){
                 newProfileMade = true;
                 createProfile();
                 break;
-            }
+            } 
         }
-        Username = user;
+        Username = u;
         if(!newProfileMade){
             HidePassword hideThread = new HidePassword();
             hideThread.start();
@@ -135,21 +139,12 @@ public class ProfilePage {
         }
     }
     public boolean checkUsername(String u) throws FileNotFoundException{
-    	  String temp = "";
-    	  Scanner test = new Scanner(new File("Users/" + u + ".txt"));
-    	  while(test.hasNext()){
-    	  	temp+=test.next() + " ";
-    	  }
-    	  for(int i = 0;i<temp.length();i++){
-    	  	if(temp.contains(" " + u + " "))
-    	  		return true;
-    	  }
-    	  return false;
-        /*File f = new File("Users/"+u+".txt");
-        if(f.exists())
-           return false;
-        return true;*/
-    }
+        File f = new File("Users/"+u+".txt");
+        if(f.exists()){
+            return true;
+        }
+        return false;
+     }
     
     public boolean checkPassword(String u, String p) throws FileNotFoundException{
           String temp = "";

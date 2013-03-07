@@ -1,8 +1,9 @@
+import java.util.*;
+import java.io.*;
+
 public class User {
 
-    private String username;
-    private String password;
-    private String email;
+    private String Username;
     private int level;
     private int points;
     private int qcorrect;
@@ -17,16 +18,27 @@ public class User {
         totalquestions = 0;
     }
     
-    public User(String u, String p, String e){
-        username = u;
-        password = p;
-        email = e;
-        User();
+    public User(String u){
+        Username = u;
     }
     
-    public saveInfo(){
-        
-    }
-    
-    
+    public String getEmail() throws FileNotFoundException{
+    	  Scanner input = new Scanner(new File("Users/" + Username + ".txt"));
+        String text = "";
+        while(input.hasNext()){
+           text += input.next() + " ";
+        }
+        //System.out.println(text);
+        String email = "";
+        int temp = 0;
+        for(int i=0; i<text.length(); i++){
+            if(text.substring(i,i+8).equals("E-mail: ")){
+                temp = i+8;
+            }
+            if(i+8>=text.length())
+            	break;
+        }
+        email += text.substring(temp,text.length());
+        return email;
+	}
 }

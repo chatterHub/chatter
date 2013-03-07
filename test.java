@@ -11,8 +11,9 @@ public class test {
         */
         
         //testing profilepage class
-        ProfilePage p = new ProfilePage();
-        
+        //ProfilePage p = new ProfilePage();
+        User u = new User("tyler");
+        System.out.println("Tyler's email: " + u.getEmail());
         
     }
 }
