@@ -28,7 +28,7 @@ public class ProfilePage {
 	   //prompting for username
          System.out.print("\nWhat would you like your username to be? ");
          String u = sc.nextLine();
-         while(!checkUsername(u)){
+         while(checkUsername(u)){
          	System.out.println("This username is already being used.");
          	System.out.print("What would you like your username to be? ");
          	u = sc.nextLine();
@@ -134,11 +134,21 @@ public class ProfilePage {
         System.out.println("Arranging profile page..."); 
         }
     }
-    public boolean checkUsername(String u){
-        File f = new File("Users/"+u+".txt");
+    public boolean checkUsername(String u) throws FileNotFoundException{
+    	  String temp = "";
+    	  Scanner test = new Scanner(new File("Users/" + u + ".txt"));
+    	  while(test.hasNext()){
+    	  	temp+=test.next() + " ";
+    	  }
+    	  for(int i = 0;i<temp.length();i++){
+    	  	if(temp.contains(" " + u + " "))
+    	  		return true;
+    	  }
+    	  return false;
+        /*File f = new File("Users/"+u+".txt");
         if(f.exists())
-           return true;
-        return false;
+           return false;
+        return true;*/
     }
     
     public boolean checkPassword(String u, String p) throws FileNotFoundException{
@@ -148,7 +158,7 @@ public class ProfilePage {
                 temp += test.next() + " ";
           }
           for(int i = 0;i<temp.length();i++){
-                if(temp.contains(u) && temp.contains(p))
+                if(temp.contains(" " +u+ " ") && temp.contains(" "+p+" "))
                         return true;
           }
           return false;
