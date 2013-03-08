@@ -157,13 +157,15 @@ public class ProfilePage {
     //static method to be access after a question is answered and after
     //profile is accessed
     public void inProfile(String u) throws FileNotFoundException{
-    	  User user = new User(u);
-        System.out.println(user.Username + "'s email: " + user.getEmail());
-        System.out.println(user.Username + "'s level: " + user.getLevel());
-        System.out.println(user.Username + "'s points: " + user.getPoints());
-        System.out.println(user.Username + "'s has answered: " + user.getCorrect() +" correct");
-        System.out.println(user.Username + "'s has answered: " + user.getIncorrect() +" incorrect");
-        System.out.println(user.Username + "'s has answered: " + user.getTotalQuestions() +" total questions");
+    	User user = new User(u);
+    	System.out.println("<--------------------------------------------->");
+    	System.out.println(user.Username + "'s Profile");
+        System.out.println("Level: " + user.getLevel());
+        System.out.println("Points: " + user.getPoints());
+        System.out.println("Questions answered Correct: " + user.getCorrect());
+        System.out.println("Questions answered Incorrect: " + user.getIncorrect());
+        System.out.println("Total Questions Attempted: " + user.getTotalQuestions());
+        System.out.println("<--------------------------------------------->");
         
         System.out.print("\nWould you like to play or exit? (play/exit) ");
         String yn = sc.nextLine().toLowerCase();
@@ -175,7 +177,7 @@ public class ProfilePage {
         }
         //let the games begin!
         if(yn.equals("play") || yn.equals("p")){
-            System.out.println("TO CHATTER!");
+            System.out.println("\nWELCOME TO CHATTER!");
             Chatter.play(user.getLevel(),user);
         }
         else if(yn.equals("exit") || yn.equals("e")){

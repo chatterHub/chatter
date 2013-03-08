@@ -64,12 +64,14 @@ public class User {
         totalquestions = qcorrect + qincorrect;
         String test = "Correct:";
         updateUserInfo(test,qcorrect);
+        updateTotal();
     }
     public void updateIncorrect()throws FileNotFoundException{
         qincorrect++;
         totalquestions = qcorrect + qincorrect;
         String test = "Incorrect:";
         updateUserInfo(test,qincorrect);
+        updateTotal();
     }
     public void updateTotal()throws FileNotFoundException{
         String test = "Total Questions:";
@@ -88,10 +90,17 @@ public class User {
 	
 	//Calculates the users new level and new point
 	public void calcLevelPoints(int n){
-	    int currentpnts = level*3;
-	    currentpnts += n;
-	    level = currentpnts / 3;
-	    points = currentpnts % 3;
+	    int pointsneeded = level*3;
+	    int currentpoints = points + n;
+	    if(currentpoints >= pointsneeded){
+	        level++;
+	        points = currentpoints - pointsneeded;
+	        System.out.println("\nYOU'VE LEVELED UP TO LEVEL "+level);
+	    }else{
+	        points = currentpoints;
+	        int tolevelup = pointsneeded - currentpoints;
+	        System.out.println("\nYou still need "+tolevelup+" points to level up!");
+	    } 
 	}
 	
 	public void userOnline(boolean bool){
