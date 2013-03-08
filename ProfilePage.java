@@ -92,13 +92,23 @@ public class ProfilePage {
          PrintStream p = new PrintStream("Users/" + Username + ".txt");
          p.println("Username: " + Username);
          p.println("Password: " + Password);
+         p.println("Level: 1");
+         p.println("Points: 0");
+         p.println("Questions Correct: 0");
+         p.println("Questions Incorrect: 0");
+         p.println("Total Questions: 0");
          p.println("E-mail: " + Email);
          
          //printstream into mailing list
          PrintStream f2 = new PrintStream("MailingList.txt");
          f2.println(Username + " : " + Email);
          
+<<<<<<< HEAD
          System.out.println("Profile sucessfully created");
+=======
+         System.out.println("Profile Sucessfully Created!");
+         
+>>>>>>> f2f19d97b3e83964f89a83fb6397fa515b9cef7d
     }
     public void enterProfile() throws FileNotFoundException{
         System.out.print("Enter username: ");
@@ -141,7 +151,11 @@ public class ProfilePage {
         System.out.println("Arranging profile page..."); 
         }
     }
+<<<<<<< HEAD
      public boolean checkUsername(String u) throws FileNotFoundException{
+=======
+    public boolean checkUsername(String u) throws FileNotFoundException{
+>>>>>>> f2f19d97b3e83964f89a83fb6397fa515b9cef7d
         File f = new File("Users/"+u+".txt");
         if(f.exists()){
             return true;
@@ -156,7 +170,7 @@ public class ProfilePage {
                 temp += test.next() + " ";
           }
           for(int i = 0;i<temp.length();i++){
-                if(temp.contains(u) && temp.contains(p))
+                if(temp.contains(" " +u+ " ") && temp.contains(" "+p+" "))
                         return true;
           }
           return false;
