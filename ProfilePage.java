@@ -102,14 +102,12 @@ public class ProfilePage {
          //printstream into mailing list
          PrintStream f2 = new PrintStream("MailingList.txt");
          f2.println(Username + " : " + Email);
+         f2.close();
          
-<<<<<<< HEAD
-         System.out.println("Profile sucessfully created");
-=======
          System.out.println("Profile Sucessfully Created!");
-         
->>>>>>> f2f19d97b3e83964f89a83fb6397fa515b9cef7d
+    
     }
+    
     public void enterProfile() throws FileNotFoundException{
         System.out.print("Enter username: ");
         String u = sc.nextLine();
@@ -151,11 +149,8 @@ public class ProfilePage {
         System.out.println("Arranging profile page..."); 
         }
     }
-<<<<<<< HEAD
-     public boolean checkUsername(String u) throws FileNotFoundException{
-=======
+
     public boolean checkUsername(String u) throws FileNotFoundException{
->>>>>>> f2f19d97b3e83964f89a83fb6397fa515b9cef7d
         File f = new File("Users/"+u+".txt");
         if(f.exists()){
             return true;
