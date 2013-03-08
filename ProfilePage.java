@@ -3,14 +3,16 @@ import java.io.*;
 
 public class ProfilePage {
 
-    private Scanner sc;
-    private String Username;
+    public static Scanner sc;
+    public static String Username;
     private String Password;
     private String Email;
-    protected boolean userLoggedIn;
     
-    public ProfilePage() throws FileNotFoundException{
+    public ProfilePage(){
         sc = new Scanner(System.in);
+    }
+    
+    public void promptPage()throws FileNotFoundException{
         System.out.print("\nAre you a new user? (yes/no) ");
         String yn = sc.nextLine().toLowerCase();
         while(!yn.equals("yes") && !yn.equals("y") 
@@ -105,6 +107,7 @@ public class ProfilePage {
          f2.close();
          
          System.out.println("Profile Sucessfully Created!");
+         enterProfile();
     
     }
     
@@ -145,8 +148,38 @@ public class ProfilePage {
                 hideThread.stopThread = true;
             }catch (Exception e) {}
         System.out.println("\b\b");
-        userLoggedIn = true;
         System.out.println("Arranging profile page..."); 
+        System.out.println();
+        inProfile(u);
+        }
+    }
+    
+    //static method to be access after a question is answered and after
+    //profile is accessed
+    public void inProfile(String u) throws FileNotFoundException{
+    	  User user = new User(u);
+        System.out.println(user.Username + "'s email: " + user.getEmail());
+        System.out.println(user.Username + "'s level: " + user.getLevel());
+        System.out.println(user.Username + "'s points: " + user.getPoints());
+        System.out.println(user.Username + "'s has answered: " + user.getCorrect() +" correct");
+        System.out.println(user.Username + "'s has answered: " + user.getIncorrect() +" incorrect");
+        System.out.println(user.Username + "'s has answered: " + user.getTotalQuestions() +" total questions");
+        
+        System.out.print("\nWould you like to play or exit? (play/exit) ");
+        String yn = sc.nextLine().toLowerCase();
+        while(!yn.equals("play") && !yn.equals("p") 
+            && !yn.equals("exit") && !yn.equals("e")){
+                System.out.println(yn+" is incorrect input, try again....");
+                System.out.print("Play or Exit? (play/exit) ");
+                yn = sc.nextLine().toLowerCase();
+        }
+        //let the games begin!
+        if(yn.equals("play") || yn.equals("p")){
+            System.out.println("TO CHATTER!");
+            Chatter.play(user.getLevel(),user);
+        }
+        else if(yn.equals("exit") || yn.equals("e")){
+            System.exit(0);
         }
     }
 

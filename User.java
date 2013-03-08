@@ -3,7 +3,7 @@ import java.io.*;
 
 public class User {
 
-    private String Username;
+    public String Username;
     private String Password;
     private String Email;
     private int level;
@@ -12,7 +12,6 @@ public class User {
     private int qincorrect;
     private int totalquestions;
     public boolean online;
-    public boolean offline;
     
     public User(String u) throws FileNotFoundException{
         Username = u;
@@ -34,7 +33,6 @@ public class User {
             if(text.equals("Questions:"))
                 totalquestions = sc.nextInt();
         }
-        System.out.println("User information stored");
     }
     //Accessor methods for user information
     public String getPassword(){
@@ -101,7 +99,7 @@ public class User {
 	        online=true;
 	        System.out.println("You are now logged in as "+Username);
 	    }else
-	        offline=true;
+	        online=false;
 	        System.out.println(Username + " is now logged out...");
 	}
 	
