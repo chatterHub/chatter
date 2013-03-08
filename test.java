@@ -12,7 +12,7 @@ public class test {
         
         //testing profilepage class
         ProfilePage p = new ProfilePage();
-        User u = new User("CRoller");
+        /*User u = new User("CRoller");
         System.out.println("Before Update..............");
         System.out.println("Collen's email: " + u.getEmail());
         System.out.println("Collen's level: " + u.getLevel());
@@ -33,7 +33,7 @@ public class test {
         System.out.println("Collen's has answered: " + u.getCorrect() +" correct");
         System.out.println("Collen's has answered: " + u.getIncorrect() +" incorrect");
         System.out.println("Collen's has answered: " + u.getTotalQuestions() +" total questions");
-        System.out.println("Collen's password is: " + u.getPassword());
+        System.out.println("Collen's password is: " + u.getPassword());*/
         
         
         
