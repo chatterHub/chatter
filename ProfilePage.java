@@ -91,11 +91,18 @@ public class ProfilePage {
          PrintStream p = new PrintStream("Users/" + Username + ".txt");
          p.println("Username: " + Username);
          p.println("Password: " + Password);
+         p.println("Level: 1");
+         p.println("Points: 0");
+         p.println("Questions Correct: 0");
+         p.println("Questions Incorrect: 0");
+         p.println("Total Questions: 0");
          p.println("E-mail: " + Email);
          
          //printstream into mailing list
          PrintStream f2 = new PrintStream("MailingList.txt");
          f2.println(Username + " : " + Email);
+         
+         System.out.println("Profile Sucessfully Created!");
          
     }
     public void enterProfile() throws FileNotFoundException{

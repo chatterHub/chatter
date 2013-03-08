@@ -21,7 +21,7 @@ public class User {
     public User(String u){
         Username = u;
     }
-    
+
     public String getEmail() throws FileNotFoundException{
     	  Scanner input = new Scanner(new File("Users/" + Username + ".txt"));
         String text = "";
@@ -41,4 +41,36 @@ public class User {
         email += text.substring(temp,text.length());
         return email;
 	}
+	
+	//get level is not working
+	public int getLevel() throws FileNotFoundException{
+	  Scanner input = new Scanner(new File("Users/" + Username + ".txt"));
+        String text = "";
+        int i = 0;
+        int l = 0;
+        while(input.hasNext()){
+           text += input.next() + " ";
+           //System.out.println(text.substring(i,i+6));
+           if(text.substring(i,i+6).equals("Level:")){
+              System.out.println(text.substring(i,i+6));	
+           	  l = input.nextInt();
+           }
+           i++;
+        }
+        return l;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

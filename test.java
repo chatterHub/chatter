@@ -12,8 +12,9 @@ public class test {
         
         //testing profilepage class
         //ProfilePage p = new ProfilePage();
-        User u = new User("tyler");
-        System.out.println("Tyler's email: " + u.getEmail());
-        
+        User u = new User("CRoller");
+        System.out.println("Collen's email: " + u.getEmail());
+        //get level isn't working correctly
+        System.out.println("Collen's level: " + u.getLevel());
     }
 }
