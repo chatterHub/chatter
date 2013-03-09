@@ -175,9 +175,9 @@ public class ProfilePage {
     //prompts user if they want to keep playing the game or if they want out
     //
     public void inProfile(String u) throws FileNotFoundException{
-    	User user = new User(u);
-    	System.out.println("<--------------------------------------------->");
-    	System.out.println(user.Username + "'s Profile");
+    	  User user = new User(u);
+    	  System.out.println("<--------------------------------------------->");
+    	  System.out.println(user.Username + "'s Profile");
         System.out.println("Level: " + user.getLevel());
         System.out.println("Points: " + user.getPoints());
         System.out.println("Questions answered Correct: " + user.getCorrect());
