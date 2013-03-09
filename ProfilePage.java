@@ -3,15 +3,20 @@ import java.io.*;
 
 public class ProfilePage {
 
+    //Fields
     public static Scanner sc;
     public static String Username;
     private String Password;
     private String Email;
     
+    //Constructor: Scanner to read user input
     public ProfilePage(){
         sc = new Scanner(System.in);
     }
     
+    //prompts user if the have an account or not
+    //if they are, the are directed to createProfile();
+    //else they are directed to enterProfile();
     public void promptPage()throws FileNotFoundException{
         System.out.print("\nAre you a new user? (yes/no) ");
         String yn = sc.nextLine().toLowerCase();
@@ -27,6 +32,12 @@ public class ProfilePage {
         }
     }
     
+    /*prompts user for username, password, email
+    if username already exists, error is shown with a reprompt
+    if password and validation don't match, error is shown with reprompt
+    if email and validation don't match or @ doesen't appear...
+    error message is shown with a reprompt
+    Post-Condition: New profile is created in chatter/Users*/
     public void createProfile() throws FileNotFoundException {
 	   //prompting for username
          System.out.print("\nWhat would you like your username to be? ");
@@ -90,7 +101,7 @@ public class ProfilePage {
          f.createNewFile();
          }catch(Exception e){}
          
-         //printstreaming info to files
+         //printstreaming info to users file
          PrintStream p = new PrintStream("Users/" + Username + ".txt");
          p.println("Username: " + Username);
          p.println("Password: " + Password);
@@ -106,13 +117,16 @@ public class ProfilePage {
          f2.println(Username + " : " + Email);
          f2.close();
          
-         System.out.println("Profile Sucessfully Created!");
+         System.out.println("\nProfile Sucessfully Created!");
          enterProfile();
     
     }
-    
+    //prompts user for an existing and checks if it exists
+    //if not, you can be redirected to createProfile()
+    //once username is found, password is checked with files password
+    //Post-Conditions: User is logged in!
     public void enterProfile() throws FileNotFoundException{
-        System.out.print("Enter username: ");
+        System.out.print("\nEnter username: ");
         String u = sc.nextLine();
         boolean newProfileMade = false;
         while(!checkUsername(u)){
@@ -150,12 +164,16 @@ public class ProfilePage {
         System.out.println("\b\b");
         System.out.println("Arranging profile page..."); 
         System.out.println();
+        User user = new User(u);
+        user.userOnline(true);
+        System.out.println("\nWELCOME TO CHATTER!");
         inProfile(u);
         }
-    }
-    
-    //static method to be access after a question is answered and after
-    //profile is accessed
+    }   
+    //accessed once user is logged in, also after each round of gameplay
+    //accesses User class to access information about the user
+    //prompts user if they want to keep playing the game or if they want out
+    //
     public void inProfile(String u) throws FileNotFoundException{
     	User user = new User(u);
     	System.out.println("<--------------------------------------------->");
@@ -166,7 +184,6 @@ public class ProfilePage {
         System.out.println("Questions answered Incorrect: " + user.getIncorrect());
         System.out.println("Total Questions Attempted: " + user.getTotalQuestions());
         System.out.println("<--------------------------------------------->");
-        
         System.out.print("\nWould you like to play or exit? (play/exit) ");
         String yn = sc.nextLine().toLowerCase();
         while(!yn.equals("play") && !yn.equals("p") 
@@ -177,14 +194,17 @@ public class ProfilePage {
         }
         //let the games begin!
         if(yn.equals("play") || yn.equals("p")){
-            System.out.println("\nWELCOME TO CHATTER!");
             Chatter.play(user.getLevel(),user);
         }
         else if(yn.equals("exit") || yn.equals("e")){
+            user.userOnline(false);
             System.exit(0);
         }
     }
-
+    
+    //Parameter: String u - Username to check
+    //Returns: True - if username exists
+    //         False - otherwise
     public boolean checkUsername(String u) throws FileNotFoundException{
         File f = new File("Users/"+u+".txt");
         if(f.exists()){
@@ -192,7 +212,10 @@ public class ProfilePage {
         }
         return false;
      }
-    
+    //Parameter: String u - first password entry
+    //           String p - second password entry
+    //Returns: True - if passwords match
+    //         False - otherwise
     public boolean checkPassword(String u, String p) throws FileNotFoundException{
           String temp = "";
           Scanner test = new Scanner(new File("Users/" + u + ".txt"));
@@ -205,17 +228,25 @@ public class ProfilePage {
           }
           return false;
     }
+    //Parameter: String e1 - first email entry
+    //           String e2 - second email entry
+    //Returns: True - if emails match and contain @
+    //         False - otherwise
     public boolean checkEmail(String e1, String e2){
     	  if(e1.equals(e2)&&e1.contains("@"))
     	  	return true;
         return false;
     }
+    //Paremeters: String p1 - first password entry
+    //            String p2 - second password entry
+    //Returns: True - if passwords match
+    //         False - otherwise
     public boolean checkNewPassword(String p1, String p2){
     	  if(p1.equals(p2))
     	  	return true;
         return false;
     }
-    
+    //Post-Conditions: hides password so only user knows what they're typing
     private class HidePassword extends Thread {
         boolean stopThread= false;
         boolean hideInput= false;

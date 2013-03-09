@@ -3,6 +3,7 @@ import java.io.*;
 
 public class User {
 
+    //Fields - stores users information
     public String Username;
     private String Password;
     private String Email;
@@ -13,6 +14,7 @@ public class User {
     private int totalquestions;
     public boolean online;
     
+    //Constructor: reads the users file and sets information to fields
     public User(String u) throws FileNotFoundException{
         Username = u;
         Scanner sc = new Scanner(new File("Users/" + Username + ".txt"));
@@ -56,8 +58,10 @@ public class User {
 	public int getTotalQuestions(){
 	    return totalquestions;
 	}
+	public boolean getStatus(){
+	    return online;
+	}
 	//************************************
-	
 	//Mutator methods to change user information
     public void updateCorrect()throws FileNotFoundException{
         qcorrect++;
@@ -88,7 +92,10 @@ public class User {
 	    updateUserInfo(test,level);
 	}
 	
+	//Parameter: int n - points that will be added to user
 	//Calculates the users new level and new point
+	//changes level if enough points are present
+	//otherwise prints how many more points are needed until next lvl
 	public void calcLevelPoints(int n){
 	    int pointsneeded = level*3;
 	    int currentpoints = points + n;
@@ -102,17 +109,18 @@ public class User {
 	        System.out.println("\nYou still need "+tolevelup+" points to level up!");
 	    } 
 	}
-	
+	//tells if the user is online or not
 	public void userOnline(boolean bool){
-	    if(bool){
-	        online=true;
+	    online = bool;
+	    if(online)
 	        System.out.println("You are now logged in as "+Username);
-	    }else
-	        online=false;
+	    else
 	        System.out.println(Username + " is now logged out...");
 	}
-	
-	//Sends 
+	//Parameters: String s - what information will be reconstructed
+	//            int n - the integer that will follow the string
+	//Essentially: Reconstructs users text file with modified information
+	//so that file can be updated after each game
 	public void updateUserInfo(String s, int n) throws FileNotFoundException{
         File f = new File("Users/"+Username+".txt");
         Scanner sc = new Scanner(f);
