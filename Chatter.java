@@ -18,12 +18,14 @@ public class Chatter {
         String question = q.randomQuestion(level);
         String answer = q.getAnswer(question);
         String actualAnswer = answer.substring(0,answer.length()-2).toLowerCase();
+        
+        //Timer object
         TimerSample timer = new TimerSample(5, u);
         timer.start();
-        System.out.println("\nTimer has started");
+        System.out.println("\nThe Timer Has Begun, 30 seconds to answer!");
         System.out.println("\nQuestion: "+question);
         int left = 3;
-        while(left>0&&timer.seconds>0){
+        while(left>0){
             System.out.print("\nYour answer: ");
             String ans = sc.nextLine().toLowerCase();
         	if(ans.equals(actualAnswer)){
@@ -41,7 +43,7 @@ public class Chatter {
         	            System.out.println("HINT: Did you spell your answer correctly?");
             }
         }
-        if(left == 0||timer.seconds<=0){
+        if(left == 0){
             System.out.println("Sorry you lost...");
             System.out.println("Correct answer was " + answer);
         	u.updateIncorrect();

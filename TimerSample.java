@@ -14,8 +14,20 @@ public class TimerSample {
 	}
 
 	class Notification extends TimerTask {
+	    
+	    private int s;
+	    
+	    public Notification(){
+	        s = seconds;
+	    }
+	
 		public void run() {
-			System.out.println("\nThe Timer has expired");
+		    System.out.println("\nYOU'RE OUT OF TIME, BAHAHAHA");
+			try{
+			    u.updateIncorrect();
+			   ProfilePage p = new ProfilePage();
+			   p.inProfile(u.Username);
+			}catch(Exception e){}
 		}
 	}
 	public void start(){

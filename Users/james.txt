@@ -1,0 +1,8 @@
+Username: james
+Password: foo
+Level: 2
+Points: 3
+Correct: 2
+Questions Incorrect: 0
+Total Questions: 2
+E-mail: james@gmail.com

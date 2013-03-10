@@ -176,7 +176,7 @@ public class ProfilePage {
     //
     public void inProfile(String u) throws FileNotFoundException{
     	  User user = new User(u);
-    	  System.out.println("<--------------------------------------------->");
+    	  System.out.println("\n<--------------------------------------------->");
     	  System.out.println(user.Username + "'s Profile");
         System.out.println("Level: " + user.getLevel());
         System.out.println("Points: " + user.getPoints());

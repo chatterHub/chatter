@@ -1,0 +1,8 @@
+Username: chickens
+Password: chickens
+Level: 4
+Points: 6
+Correct: 8
+Questions Incorrect: 0
+Total Questions: 8
+E-mail: peterssc195@potsdam.edu
