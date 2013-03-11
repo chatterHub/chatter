@@ -1,7 +1,5 @@
 import java.util.*;
 import java.io.*;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Chatter {
 	  
@@ -19,20 +17,16 @@ public class Chatter {
         String answer = q.getAnswer(question);
         String actualAnswer = answer.substring(0,answer.length()-2).toLowerCase();
         
-        //Timer object
-        TimerSample timer = new TimerSample(5, u);
-        timer.start();
-        System.out.println("\nThe Timer Has Begun, 30 seconds to answer!");
         System.out.println("\nQuestion: "+question);
         int left = 3;
         while(left>0){
             System.out.print("\nYour answer: ");
             String ans = sc.nextLine().toLowerCase();
-        	if(ans.equals(actualAnswer)){
-        		System.out.println(ans + " is Correct!");
+        	if(ans.contains(actualAnswer)){
+        		System.out.println(actualAnswer + " is Correct!");
         		u.updateCorrect();
         		u.updatePoints(3);
-        		timer.cancel();
+        		break;
         	}else{
                 left--;
         		System.out.println(ans + " is Incorrect");
@@ -47,10 +41,9 @@ public class Chatter {
             System.out.println("Sorry you lost...");
             System.out.println("Correct answer was " + answer);
         	u.updateIncorrect();
-        	timer.cancel();
         }
-        //ProfilePage p = new ProfilePage();
-        //p.inProfile(u.Username);        
+        ProfilePage p = new ProfilePage();
+        p.inProfile(u.Username);        
         }
         
     }
