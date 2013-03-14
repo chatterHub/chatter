@@ -255,4 +255,10 @@ public class PlayerLogin {
 		return u.equals(user) && p.equals(pass);
 
 	}
+	
+	public boolean setInfo(){
+		pp.setUsername(Username);
+		pp.setEmail(Email);
+		return true;
+	}
 }

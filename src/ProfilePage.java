@@ -10,9 +10,11 @@ public class ProfilePage {
 
 	// Fields
 	public static Scanner sc;
-	public static String Username;
-	private String Password;
+	
+	private static String Username;
 	private String Email;
+	
+	private boolean infoSet;
 
 	// Constructor: Scanner to read user input
 	public ProfilePage() {
@@ -24,7 +26,9 @@ public class ProfilePage {
 	// else they are directed to enterProfile();
 	public void promptPage() throws FileNotFoundException {
 		PlayerLogin pl = new PlayerLogin(this, sc);
+		infoSet = false;
 		pl.login();
+		infoSet = pl.setInfo();
 	}
 
 	// accessed once user is logged in, also after each round of gameplay
@@ -68,5 +72,21 @@ public class ProfilePage {
 			user.userOnline(false);
 			System.exit(0);
 		}
+	}
+
+	public static void setUsername(String username) {
+		Username = username;
+	}
+
+	public static String getUsername() {
+		return Username;
+	}
+
+	public void setEmail(String email) {
+		Email = email;
+	}
+
+	public String getEmail() {
+		return Email;
 	}
 }
