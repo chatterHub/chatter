@@ -12,23 +12,8 @@ public class User {
     private int points;
     private int qcorrect;
     private int qincorrect;
-    private int totalquestions;
-    
-    //when online is enabled
-    public boolean online;
-    private PrintWriter out;
-    private BufferedReader in;
-    private int onlineID;
-    
-    public void setOnline(PrintWriter out, BufferedReader in, int onlineID){
-    	online = true;
-    	this.out = out;
-    	this.in = in;
-    	this.onlineID = onlineID;
-    }
-    
-    
-    
+    private int totalquestions;    
+    private boolean online;
     //Constructor: reads the users file and sets information to fields
     public User(String u) throws FileNotFoundException{
         Username = u;
