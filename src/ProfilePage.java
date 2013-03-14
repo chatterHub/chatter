@@ -2,6 +2,8 @@ package src;
 import java.util.*;
 import java.io.*;
 
+import networking.client;
+
 
 public class ProfilePage {
 
@@ -196,6 +198,14 @@ public class ProfilePage {
         }
         //let the games begin!
         if(yn.equals("play") || yn.equals("p")){
+        	System.out.print("Online? (y/n): ");
+        	while(!(yn = sc.next()).equals("y") && !yn.equals("n")){
+        		System.out.print("(y/n): ");
+        		yn = sc.next();
+        	}
+        	if(yn.equals("y"))
+        		new client();
+        	else
             Chatter.play(user.getLevel(),user);
         }
         else if(yn.equals("exit") || yn.equals("e")){

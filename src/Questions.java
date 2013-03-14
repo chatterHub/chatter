@@ -25,12 +25,12 @@ public class Questions {
     Random rand = new Random();
     int index = 0;
         if(level < 10){
-            storeQuestions("level1.txt");
+            storeQuestions("docs/level1.txt");
             index = rand.nextInt(Qlist.size());
             return Qlist.get(index);
         }
         else if(level >= 10 && level < 20){
-            storeQuestions("level2.txt");
+            storeQuestions("docs/level2.txt");
             index = rand.nextInt(Qlist.size());
             return Qlist.get(index);
         }
