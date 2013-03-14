@@ -199,12 +199,13 @@ public class ProfilePage {
         //let the games begin!
         if(yn.equals("play") || yn.equals("p")){
         	System.out.print("Online? (y/n): ");
+        	
         	while(!(yn = sc.next()).equals("y") && !yn.equals("n")){
         		System.out.print("(y/n): ");
         		yn = sc.next();
         	}
         	if(yn.equals("y"))
-        		new client();
+        		new client(user);
         	else
             Chatter.play(user.getLevel(),user);
         }
@@ -233,9 +234,10 @@ public class ProfilePage {
           Scanner userScan = new Scanner(new File("Users/" + u + ".txt"));
           userScan.next(); //scans the string "Username:"
           String user = userScan.next();
-          userScan.next(); // selects the next String, "Password"
+          userScan.next(); // selects the next String, "Password:"
           String pass = userScan.next();
           return u.equals(user) && p.equals(pass);
+          
           //while(test.hasNext()){
           //      temp += test.next() + " ";
           //}
