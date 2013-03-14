@@ -1,0 +1,8 @@
+Username: beerent
+Password: brent13
+Level: 1
+Points: 0
+Questions Correct: 0
+Questions Incorrect: 0
+Total Questions: 0
+E-mail: brentryczak@gmail.com
