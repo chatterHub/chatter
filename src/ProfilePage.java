@@ -238,14 +238,7 @@ public class ProfilePage {
           String pass = userScan.next();
           return u.equals(user) && p.equals(pass);
           
-          //while(test.hasNext()){
-          //      temp += test.next() + " ";
-          //}
-          //for(int i = 0;i<temp.length();i++){
-          //      if(temp.contains(" " +u+ " ") && temp.contains(" "+p+" "))
-          //              return true;
-          //}
-          //return false;
+
     }
     //Parameter: String e1 - first email entry
     //           String e2 - second email entry

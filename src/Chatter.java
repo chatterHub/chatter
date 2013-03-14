@@ -9,6 +9,9 @@ public class Chatter {
 	    ProfilePage p = new ProfilePage();
 	    p.promptPage();
 	  }
+	  
+	  
+	  public static void 
 	  //Parameters: int level - Users level
 	  //            User u - to access, and mutate user information
 	  //THE GAME CHATTER!
