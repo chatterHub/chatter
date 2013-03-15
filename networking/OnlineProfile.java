@@ -9,20 +9,24 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+import src.ProfilePage;
 import src.User;
 
 public class OnlineProfile {
 
+	private Scanner sc;
 	private User user;
 	private String userName;
 	private Socket s;
+	
 	private PrintWriter out;
 	private BufferedReader in;
-	private int idNumber;
-	private Scanner sc;
+	public int idNumber;
+	private ProfilePage profPage;
 
-	public OnlineProfile(User user) {
+	public OnlineProfile(ProfilePage profPage, User user) {
 		this.user = user;
+		this.profPage = profPage;
 		userName = user.getUsername();
 		sc = new Scanner(System.in);
 		try {
@@ -45,6 +49,9 @@ public class OnlineProfile {
 			input = in.readLine(); // get request for username
 			out.write(user.getUsername() + "\n");
 			out.flush();
+			int n = Integer.parseInt(in.readLine());
+			System.out.println(n);
+			idNumber = n;
 			user.userOnline(true);
 
 		} catch (IOException e) {
@@ -102,15 +109,25 @@ public class OnlineProfile {
 
 	private void QueueForBattle() {
 		System.out.println("Prepare for battle!");
-		
+			messageServer("QUEUE");	
+			messageServer("" + idNumber);
+			System.out.println("printed QUEUE " + idNumber);
+	}
+	
+	private void messageServer(String s){
+		out.write(s+"\n");
 	}
 
 	public static void main(String[] args) {
 		try {
 			User u = new User("beerent");
-			new OnlineProfile(u);
+			//new OnlineProfile(u);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void setIDNumber(int n){
+		idNumber = n;
 	}
 }

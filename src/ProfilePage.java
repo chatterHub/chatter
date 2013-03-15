@@ -69,7 +69,7 @@ public class ProfilePage {
 			}
 			// if user wants to play online
 			if (yn.equals("y"))
-				new OnlineProfile(user);
+				new OnlineProfile(this, user);
 			else
 				Chatter.play(user.getLevel(), user);
 		} else if (yn.equals("exit") || yn.equals("e")) {

@@ -13,56 +13,104 @@ import java.util.Queue;
 
 import src.User;
 
-public class server extends Thread{
-	private static ArrayList<User> onlineUsers;
+public class server extends Thread {
+	private static User [] onlineUsers;
 	private static Queue<User> levelTen = new LinkedList<User>();
-	
+
 	private static int port;
 	private Socket s;
 	private PrintWriter out;
 	private BufferedReader in;
 	private String handshakeKey = "CLIENT";
-	public server(){
-		onlineUsers = new ArrayList<User>();
+	
+	private int onlinePlayerCount;
+
+	public server() {
+		onlineUsers = new User[100];
 	}
-	public server(Socket s){
+
+	public server(Socket s) {
 		this.s = s;
 		try {
 			out = new PrintWriter(s.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-		} catch (IOException e) {
-			System.out.println("could not open IO on socket.");
-			System.exit(1);
-		}
-		
-		try {
-			if(in.readLine().equals(handshakeKey)){ //verify user
+			
+			if (in.readLine().equals(handshakeKey)) { // verify user
 				setupNewUser();
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("could not open IO on socket.");
+			return;
 		}
 	}
 	
-	public void setupNewUser(){
+	private void sendStats(){
+		//TODO send client personal stats
+	}
+
+	public void setupNewUser() {
 		out.write("USERNAME\n");
 		out.flush();
 		try {
 			String userName = in.readLine();
 			User user = new User(userName);
-			onlineUsers.add(user);			
+			addUser(user);
 			System.out.println(userName + " is online");
-			
+			onlinePlayerCount++;
+			sendStats();
+			run();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+	private void addUser(User user){
+		for(int i = 0; i <onlineUsers.length; i++){
+			if(onlineUsers[i] == null){
+				onlineUsers[i] =  user;
+				out.write(""+i+"\n");
+				out.flush();
+				return;
+			}
+		}
+		System.out.println("TOO MANY PLAYERS PLAYING. SORRY.");
+	}
+	
+	public void run(){
+		boolean playing = true;
+		while(playing){
+			try {
+				String input = in.readLine();
+				analyzeInput(input);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}			
+		}
+	}
 
-	private void listen(){
+	
+	private void analyzeInput(String s){
+		System.out.println(s == null);
+		if(s.equals("QUEUE")){
+			try {
+				addToQueue(in.readLine());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void addToQueue(String s){	
+		levelTen.add(onlineUsers[Integer.parseInt(s)]);
+		System.out.println("added " + onlineUsers[Integer.parseInt(s)] + " to level 10 queue.");
+	}
+	
+	private void listen() {
+		onlinePlayerCount = 0;
 		try {
 			ServerSocket ss = new ServerSocket(6666);
 			System.out.println("server listening on port " + 6666);
-			while(true){			
+			while (true) {
 				Socket s = ss.accept();
 				System.out.println("new client connected");
 				new server(s);
@@ -72,7 +120,7 @@ public class server extends Thread{
 		}
 	}
 
-	public static void main(String [] args){
+	public static void main(String[] args) {
 		server serv = new server();
 		serv.listen();
 	}

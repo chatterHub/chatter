@@ -2,6 +2,8 @@ package src;
 import java.util.*;
 import java.io.*;
 
+import networking.OnlineProfile;
+
 public class User {
 
     //Fields - stores users information
@@ -146,6 +148,10 @@ public class User {
             ps.println(line);
         }
     }
+	
+	public String toString(){
+		return Username ;
+	}
 }
 
 
