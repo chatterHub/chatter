@@ -47,13 +47,11 @@ public class server extends Thread{
 	public void setupNewUser(){
 		out.write("USERNAME\n");
 		out.flush();
-		System.out.println("get username");
 		try {
 			String userName = in.readLine();
 			User user = new User(userName);
-			System.out.println("user accepted");
 			onlineUsers.add(user);			
-			System.out.println("user online");
+			System.out.println(userName + " is online");
 			
 		} catch (Exception e) {
 			e.printStackTrace();

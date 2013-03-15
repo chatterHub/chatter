@@ -1,8 +1,8 @@
 Username: beerent
 Password: brent13
-Level: 2
+Level: 3
 Points: 0
-Correct: 1
+Correct: 3
 Questions Incorrect: 0
-Total Questions: 1
+Total Questions: 3
 E-mail: brentryczak@gmail.com

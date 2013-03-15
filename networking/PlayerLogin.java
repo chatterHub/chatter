@@ -236,7 +236,6 @@ public class PlayerLogin {
 			User user = new User(u);
 			user.userOnline(true);
 			System.out.println("\nWELCOME TO CHATTER!");
-			// inProfile(u);
 		}
 	}
 

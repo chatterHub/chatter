@@ -14,8 +14,8 @@ public class ProfilePage {
 	private static String Username;
 	private String Email;
 	
-	private boolean infoSet;
-
+	private boolean infoSet; //if the players username and email
+	
 	// Constructor: Scanner to read user input
 	public ProfilePage() {
 		sc = new Scanner(System.in);
@@ -29,6 +29,9 @@ public class ProfilePage {
 		infoSet = false;
 		pl.login();
 		infoSet = pl.setInfo();
+		if(infoSet){
+			inProfile(Username);
+		}
 	}
 
 	// accessed once user is logged in, also after each round of gameplay
@@ -55,6 +58,7 @@ public class ProfilePage {
 			System.out.print("Play or Exit? (play/exit) ");
 			yn = sc.nextLine().toLowerCase();
 		}
+		
 		// let the games begin!
 		if (yn.equals("play") || yn.equals("p")) {
 			System.out.print("Online? (y/n): ");
@@ -74,18 +78,22 @@ public class ProfilePage {
 		}
 	}
 
+	//username setter
 	public static void setUsername(String username) {
 		Username = username;
 	}
 
+	//username getter
 	public static String getUsername() {
 		return Username;
 	}
 
+	//email setter
 	public void setEmail(String email) {
 		Email = email;
 	}
 
+	//email getter
 	public String getEmail() {
 		return Email;
 	}

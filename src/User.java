@@ -112,14 +112,18 @@ public class User {
 	        System.out.println("\nYou still need "+tolevelup+" points to level up!");
 	    } 
 	}
+	
 	//tells if the user is online or not
 	public void userOnline(boolean bool){
 	    online = bool;
 	    if(online)
 	        System.out.println("You are now logged in as "+Username);
-	    else
+	    else{
 	        System.out.println(Username + " is now logged out...");
+	        System.exit(0);
+	    }
 	}
+	
 	//Parameters: String s - what information will be reconstructed
 	//            int n - the integer that will follow the string
 	//Essentially: Reconstructs users text file with modified information
