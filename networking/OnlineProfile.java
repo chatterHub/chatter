@@ -116,9 +116,12 @@ public class OnlineProfile {
 		out.flush();
 	}
 	
+	//returns out
 	public PrintWriter getOut(){
 		return out;
 	}
+	
+	//returns in
 	public BufferedReader getIn(){
 		return in;
 	}

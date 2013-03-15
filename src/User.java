@@ -18,6 +18,9 @@ public class User {
     
     private OnlineProfile onlineProfile;
     private boolean online;
+    private PrintWriter out;
+    private BufferedReader in;
+
     //Constructor: reads the users file and sets information to fields
     public User(String u) throws FileNotFoundException{
         Username = u;
@@ -156,7 +159,9 @@ public class User {
 	}
 	
 	public void setOnline(){
-		onlineProfile = new OnlineProfile(this);		
+		onlineProfile = new OnlineProfile(this);	
+		this.out = onlineProfile.getOut();
+		this.in = onlineProfile.getIn();
 	}
 }
 
