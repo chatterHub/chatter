@@ -63,7 +63,8 @@ public class ProfilePage {
 		if (yn.equals("play") || yn.equals("p")) {
 			System.out.print("Online? (y/n): ");
 			// force valid input
-			while (!(yn = sc.next()).equals("y") && !yn.equals("n")) {
+			yn = sc.next();
+			while (!yn.equals("y") && !yn.equals("n")) {
 				System.out.print("(y/n): ");
 				yn = sc.next();
 			}
