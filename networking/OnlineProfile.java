@@ -22,11 +22,9 @@ public class OnlineProfile {
 	private PrintWriter out;
 	private BufferedReader in;
 	public int idNumber;
-	private ProfilePage profPage;
 
-	public OnlineProfile(ProfilePage profPage, User user) {
+	public OnlineProfile(User user) {
 		this.user = user;
-		this.profPage = profPage;
 		userName = user.getUsername();
 		sc = new Scanner(System.in);
 		try {
@@ -116,6 +114,13 @@ public class OnlineProfile {
 	private void messageServer(String s){
 		out.write(s+"\n");
 		out.flush();
+	}
+	
+	public PrintWriter getOut(){
+		return out;
+	}
+	public BufferedReader getIn(){
+		return in;
 	}
 
 	public static void main(String[] args) {

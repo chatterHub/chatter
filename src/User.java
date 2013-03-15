@@ -14,7 +14,9 @@ public class User {
     private int points;
     private int qcorrect;
     private int qincorrect;
-    private int totalquestions;    
+    private int totalquestions;
+    
+    private OnlineProfile onlineProfile;
     private boolean online;
     //Constructor: reads the users file and sets information to fields
     public User(String u) throws FileNotFoundException{
@@ -151,6 +153,10 @@ public class User {
 	
 	public String toString(){
 		return Username ;
+	}
+	
+	public void setOnline(){
+		onlineProfile = new OnlineProfile(this);		
 	}
 }
 

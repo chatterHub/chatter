@@ -29,6 +29,10 @@ public class server extends Thread {
 	public server() {
 		onlineUsers = new User[100];
 	}
+	
+	public server(boolean queueWatch){
+		this.queueWatch = queueWatch;
+	}
 
 	public server(Socket s) {
 		this.s = s;
@@ -78,6 +82,18 @@ public class server extends Thread {
 	}
 	
 	public void run(){
+		if(queueWatch){
+			while(true){
+				//GameServer gameServer;
+				//comparing to level 1 for testing purposes
+				if(levelTen.size() == 1){
+					User [] playersToSend = new User [1];
+					playersToSend[0] = levelTen.remove();
+					//gameServer = new GameServer(playersToSend, 1);
+					//gameServer.newGame();
+				}
+			}
+		}
 		boolean playing = true;
 		while(playing){
 			try {
