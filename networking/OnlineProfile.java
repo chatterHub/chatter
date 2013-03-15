@@ -111,11 +111,11 @@ public class OnlineProfile {
 		System.out.println("Prepare for battle!");
 			messageServer("QUEUE");	
 			messageServer("" + idNumber);
-			System.out.println("printed QUEUE " + idNumber);
 	}
 	
 	private void messageServer(String s){
 		out.write(s+"\n");
+		out.flush();
 	}
 
 	public static void main(String[] args) {

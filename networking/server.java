@@ -16,6 +16,7 @@ import src.User;
 public class server extends Thread {
 	private static User [] onlineUsers;
 	private static Queue<User> levelTen = new LinkedList<User>();
+	private static boolean queueWatch;
 
 	private static int port;
 	private Socket s;
@@ -58,8 +59,8 @@ public class server extends Thread {
 			System.out.println(userName + " is online");
 			onlinePlayerCount++;
 			sendStats();
-			run();
-		} catch (Exception e) {
+			new Thread(this).start();
+		} catch (Exception e ) {
 			e.printStackTrace();
 		}
 	}
@@ -81,7 +82,8 @@ public class server extends Thread {
 		while(playing){
 			try {
 				String input = in.readLine();
-				analyzeInput(input);
+				if(input!=null)
+					analyzeInput(input);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}			
@@ -90,7 +92,6 @@ public class server extends Thread {
 
 	
 	private void analyzeInput(String s){
-		System.out.println(s == null);
 		if(s.equals("QUEUE")){
 			try {
 				addToQueue(in.readLine());
@@ -123,5 +124,16 @@ public class server extends Thread {
 	public static void main(String[] args) {
 		server serv = new server();
 		serv.listen();
+	}
+	
+	private static void terminateQueueWatcher(){
+		queueWatch = false;
+	}
+	
+	public static void queueWatcher(){
+		queueWatch = true;
+		while(queueWatch){
+			
+		}
 	}
 }
