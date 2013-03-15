@@ -87,9 +87,15 @@ public class server extends Thread {
 				//GameServer gameServer;
 				//comparing to level 1 for testing purposes
 				if(levelTen.size() == 1){
-					User [] playersToSend = new User [1];
-					playersToSend[0] = levelTen.remove();
-					//gameServer = new GameServer(playersToSend, 1);
+					User [] playersToSend = new User[4];
+					PrintWriter [] sockOut = new PrintWriter[4];
+					BufferedReader [] sockIn = new BufferedReader[4];
+					for(int i = 0; i < 1 ; i++){
+						playersToSend[i] = levelTen.remove();
+						
+					}
+					
+					//gameServer = new GameServer(playersToSend,sockOut, sockIn, 1);
 					//gameServer.newGame();
 				}
 			}

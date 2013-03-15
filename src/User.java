@@ -163,6 +163,11 @@ public class User {
 		this.out = onlineProfile.getOut();
 		this.in = onlineProfile.getIn();
 	}
+	
+	public void sendToServer(String s){
+		out.write(s + "\n");
+		out.flush();
+	}
 }
 
 
