@@ -1,8 +1,8 @@
 Username: tyler
 Password: smith
 Level: 5
-Points: 6
-Correct: 17
+Points: 9
+Correct: 18
 Incorrect: 5
-Total Questions: 22
+Total Questions: 23
 E-mail: l@l
