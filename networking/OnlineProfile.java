@@ -45,7 +45,7 @@ public class OnlineProfile {
 			out.write("CLIENT\n");
 			out.flush();
 			input = in.readLine(); // get request for username
-			out.write(user.getUsername() + "\n");
+			out.write(user.getUsername() + "\n");		
 			out.flush();
 			int n = Integer.parseInt(in.readLine());
 			System.out.println(n);

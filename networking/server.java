@@ -8,30 +8,33 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 
 import src.User;
 
 public class server extends Thread {
-	private static User [] onlineUsers;
+	private static Map<String, PrintWriter> usersOut;
+	private static Map<String, BufferedReader> usersIn;
+	private static Map<String, User> usersOnline;
+
 	private static Queue<User> levelTen = new LinkedList<User>();
-	private static boolean queueWatch;
 
 	private static int port;
 	private Socket s;
 	private PrintWriter out;
 	private BufferedReader in;
 	private String handshakeKey = "CLIENT";
-	
-	private int onlinePlayerCount;
+
+	// TODO
+	private static int onlinePlayerCount;
 
 	public server() {
-		onlineUsers = new User[100];
-	}
-	
-	public server(boolean queueWatch){
-		this.queueWatch = queueWatch;
+		usersOut = new HashMap<String, PrintWriter>();
+		usersIn = new HashMap<String, BufferedReader>();
+		usersOnline = new HashMap<String, User>();
 	}
 
 	public server(Socket s) {
@@ -39,7 +42,6 @@ public class server extends Thread {
 		try {
 			out = new PrintWriter(s.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-			
 			if (in.readLine().equals(handshakeKey)) { // verify user
 				setupNewUser();
 			}
@@ -48,9 +50,9 @@ public class server extends Thread {
 			return;
 		}
 	}
-	
-	private void sendStats(){
-		//TODO send client personal stats
+
+	private void sendStats() {
+		// TODO send client personal stats
 	}
 
 	public void setupNewUser() {
@@ -59,57 +61,50 @@ public class server extends Thread {
 		try {
 			String userName = in.readLine();
 			User user = new User(userName);
-			addUser(user);
+			usersOnline.put(userName, user);
+			usersOut.put(userName, out);
+			usersIn.put(userName, in);
 			System.out.println(userName + " is online");
+			
+			//send player its personal player number
+			out.write(""+onlinePlayerCount+"\n");
+			out.flush();			
 			onlinePlayerCount++;
 			sendStats();
 			new Thread(this).start();
-		} catch (Exception e ) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	private void addUser(User user){
-		for(int i = 0; i <onlineUsers.length; i++){
-			if(onlineUsers[i] == null){
-				onlineUsers[i] =  user;
-				out.write(""+i+"\n");
-				out.flush();
-				return;
-			}
-		}
-		System.out.println("TOO MANY PLAYERS PLAYING. SORRY.");
-	}
-	
-	public void run(){
+
+	public void run() {
 		boolean playing = true;
-		while(playing){
+		while (playing) {
 			try {
 				String input = in.readLine();
-				if(input!=null)
+				if (input != null)
 					analyzeInput(input);
 			} catch (IOException e) {
 				e.printStackTrace();
-			}			
+			}
 		}
 	}
 
-	
-	private void analyzeInput(String s){
-		if(s.equals("QUEUE")){
+	private void analyzeInput(String s) {
+		if (s.equals("QUEUE")) {
 			try {
-				addToQueue(in.readLine());
-			} catch (IOException e) {
+				addToQueue();
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
 	
-	private void addToQueue(String s){	
-		levelTen.add(onlineUsers[Integer.parseInt(s)]);
-		System.out.println("added " + onlineUsers[Integer.parseInt(s)] + " to level 10 queue.");
+	public static void addToQueue(){
+		GameServer gameServe = new GameServer(usersOut, usersIn, usersOnline);
+		new Thread(gameServe).start();
 	}
-	
+
 	private void listen() {
 		onlinePlayerCount = 0;
 		try {
@@ -129,15 +124,5 @@ public class server extends Thread {
 		server serv = new server();
 		serv.listen();
 	}
-	
-	private static void terminateQueueWatcher(){
-		queueWatch = false;
-	}
-	
-	public static void queueWatcher(){
-		queueWatch = true;
-		while(queueWatch){
-			
-		}
-	}
+
 }

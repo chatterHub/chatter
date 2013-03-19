@@ -1,18 +1,22 @@
 package networking;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Map;
 import java.util.Scanner;
 
 import src.ProfilePage;
 import src.Questions;
 import src.User;
 
-public class GameServer {
-	public User [] players;
-	private int levelCap;
+public class GameServer extends Thread{
+	private Map<String, PrintWriter> usersOut;
+	private Map<String, BufferedReader> usersIn;
+	private Map<String, User> usersOnline;
 	
 	public GameServer(int levelCap){
-		this.levelCap = levelCap;
+		
 	}
 	
 	public void newGame(){	
