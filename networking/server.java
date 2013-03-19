@@ -26,6 +26,7 @@ public class server extends Thread {
 	private Socket s;
 	private PrintWriter out;
 	private BufferedReader in;
+	private String username;
 	private String handshakeKey = "CLIENT";
 
 	// TODO
@@ -60,6 +61,7 @@ public class server extends Thread {
 		out.flush();
 		try {
 			String userName = in.readLine();
+			username = userName;
 			User user = new User(userName);
 			usersOnline.put(userName, user);
 			usersOut.put(userName, out);
@@ -93,16 +95,16 @@ public class server extends Thread {
 	private void analyzeInput(String s) {
 		if (s.equals("QUEUE")) {
 			try {
-				addToQueue();
+				addToQueue(usersOnline.get(getUsername()));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
 	
-	public static void addToQueue(){
-		GameServer gameServe = new GameServer(usersOut, usersIn, usersOnline);
-		new Thread(gameServe).start();
+	public static void addToQueue(User user){
+		
+		//System.out.println("added " + user + " to queue");
 	}
 
 	private void listen() {
@@ -124,5 +126,8 @@ public class server extends Thread {
 		server serv = new server();
 		serv.listen();
 	}
-
+	
+	private String getUsername(){
+		return username;
+	}
 }

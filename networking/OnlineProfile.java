@@ -86,8 +86,7 @@ public class OnlineProfile {
 			} catch (Exception e) {
 				// not an integer
 				System.out.println("Invalid input.");
-				System.out.println("enter an option between 1 and "
-						+ optionCount + ": ");
+				System.out.println("enter an option between 1 and " + optionCount + ": ");
 				input = sc.next();
 			}
 		}
@@ -107,8 +106,9 @@ public class OnlineProfile {
 
 	private void QueueForBattle() {
 		System.out.println("Prepare for battle!");
-			messageServer("QUEUE");	
-			messageServer("" + idNumber);
+		System.out.println("please wait for more players...");
+		messageServer("QUEUE");	
+		//messageServer("" + idNumber);
 	}
 	
 	private void messageServer(String s){

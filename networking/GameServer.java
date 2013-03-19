@@ -23,8 +23,8 @@ public class GameServer extends Thread{
 		Questions q = new Questions();
 		String question = null;
 		try {
-			question = q.randomQuestion(levelCap);
-		} catch (FileNotFoundException e) {
+			//question = q.randomQuestion(levelCap);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		String answer = q.getAnswer(question);
