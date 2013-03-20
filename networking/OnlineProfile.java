@@ -109,11 +109,31 @@ public class OnlineProfile {
 		System.out.println("please wait for more players...");
 		messageServer("QUEUE");	
 		try {
-			System.out.println("CLIENT RECEIVED: " + in.readLine());
+			String begin = in.readLine();
+			if(begin.equals("GAMEREADY")){
+				rungame();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	private void rungame(){
+		boolean gameon = true;
+		String input;
+		while(gameon){
+			try {
+				input = in.readLine();
+				if(input != null){
+					//TODO analyze Input
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+
 	
 	private void messageServer(String s){
 		out.write(s+"\n");
