@@ -20,7 +20,7 @@ public class server extends Thread {
 	private static Map<String, BufferedReader> usersIn;
 	private static Map<String, User> usersOnline;
 
-	private static Queue<User> levelTen = new LinkedList<User>();
+	private static Queue<String> levelTen = new LinkedList<String>();
 
 	private static int port;
 	private Socket s;
@@ -40,15 +40,18 @@ public class server extends Thread {
 
 	public server(Socket s) {
 		this.s = s;
-		try {
-			out = new PrintWriter(s.getOutputStream(), true);
-			in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-			if (in.readLine().equals(handshakeKey)) { // verify user
-				setupNewUser();
-			}
-		} catch (IOException e) {
-			System.out.println("could not open IO on socket.");
+		try{
+			setServerClientIO();
+		}catch(Exception e){
+			System.out.println(e.getMessage());
 			return;
+		}
+	}
+	private void setServerClientIO() throws Exception{
+		out = new PrintWriter(s.getOutputStream(), true);
+		in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+		if (in.readLine().equals(handshakeKey)) { // verify user
+			setupNewUser();
 		}
 	}
 
@@ -95,16 +98,32 @@ public class server extends Thread {
 	private void analyzeInput(String s) {
 		if (s.equals("QUEUE")) {
 			try {
-				addToQueue(usersOnline.get(getUsername()));
+				addToQueue(getUsername());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
 	
-	public static void addToQueue(User user){
-		
-		//System.out.println("added " + user + " to queue");
+	public static void addToQueue(String userName){
+		levelTen.add(userName);
+		if(levelTen.size() ==2){
+			GameServer gameServer;
+			Map<User, PrintWriter> playersOut = new HashMap<User, PrintWriter>();
+			Map<User, BufferedReader> playersIn = new HashMap<User, BufferedReader>();
+			String name;
+			for(int i = 0; i < 4; ){
+				if(levelTen.size()!=0)
+				name = levelTen.remove();
+				else name = null;
+				if(name != null){
+					playersOut.put(usersOnline.get(name), usersOut.get(name));
+					playersIn.put(usersOnline.get(name), usersIn.get(name));	
+				}
+			}
+			gameServer = new GameServer(playersOut, playersIn, 10);
+			gameServer.test();
+		}
 	}
 
 	private void listen() {

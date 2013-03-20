@@ -11,24 +11,23 @@ import src.Questions;
 import src.User;
 
 public class GameServer extends Thread{
-	private Map<String, PrintWriter> usersOut;
-	private Map<String, BufferedReader> usersIn;
+	private Map<User, PrintWriter> usersOut;
+	private Map<User, BufferedReader> usersIn;
+	
+	private int levelCap;
+	
 	private Map<String, User> usersOnline;
 	
-	public GameServer(int levelCap){
-		
+	public GameServer(Map<User, PrintWriter> usersOut, Map<User, BufferedReader> playersIn, int levelCap){
+		this.usersOut = usersOut;
+		this.usersIn = usersIn;
+		this.levelCap = levelCap;		
 	}
 	
-	public void newGame(){	
-		Questions q = new Questions();
-		String question = null;
-		try {
-			//question = q.randomQuestion(levelCap);
-		} catch (Exception e) {
-			e.printStackTrace();
+	public void test(){
+		for(PrintWriter out : usersOut.values()){
+			out.write("testtesttest\n");
+			out.flush();
 		}
-		String answer = q.getAnswer(question);
-		String actualAnswer = answer.substring(0, answer.length() - 2).toLowerCase();
-
 	}
 }

@@ -108,7 +108,11 @@ public class OnlineProfile {
 		System.out.println("Prepare for battle!");
 		System.out.println("please wait for more players...");
 		messageServer("QUEUE");	
-		//messageServer("" + idNumber);
+		try {
+			System.out.println("CLIENT RECEIVED: " + in.readLine());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void messageServer(String s){
