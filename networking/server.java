@@ -47,6 +47,7 @@ public class server extends Thread {
 			return;
 		}
 	}
+	
 	private void setServerClientIO() throws Exception{
 		out = new PrintWriter(s.getOutputStream(), true);
 		in = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -115,6 +116,7 @@ public class server extends Thread {
 				if(levelTen.size()!=0) name = levelTen.remove();
 				else name = null;
 				if(name != null){
+					System.out.println("user " + );
 					playersOut.put(usersOnline.get(name), usersOut.get(name));
 					playersIn.put(usersOnline.get(name), usersIn.get(name));	
 				}
@@ -151,6 +153,14 @@ public class server extends Thread {
 	private void messageClient(String msgOut){
 		out.write(msgOut + "\n");
 		out.flush();
+	}
+	private String receiveClient(){
+		try {
+			return in.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	private String getUsername(){

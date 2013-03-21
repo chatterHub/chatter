@@ -42,7 +42,6 @@ public class OnlineProfile {
 	private void handshake() {
 		String input;
 		try {
-			System.out.println("sending client");
 			messageServer("CLIENT");
 			input = in.readLine(); // get request for username
 			messageServer(user.getUsername());
