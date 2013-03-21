@@ -60,8 +60,7 @@ public class server extends Thread {
 	}
 
 	public void setupNewUser() {
-		out.write("USERNAME\n");
-		out.flush();
+		messageClient("USERNAME");
 		try {
 			String userName = in.readLine();
 			username = userName;
@@ -71,9 +70,8 @@ public class server extends Thread {
 			usersIn.put(userName, in);
 			System.out.println(userName + " is online");
 			
-			//send player its personal player number
-			out.write(""+onlinePlayerCount+"\n");
-			out.flush();			
+			//send player its personal player number	
+			messageClient(""+onlinePlayerCount);
 			onlinePlayerCount++;
 			sendStats();
 			new Thread(this).start();
@@ -106,23 +104,27 @@ public class server extends Thread {
 	}
 	
 	public static void addToQueue(String userName){
+		System.out.println("adding " + userName + " to queue");
 		levelTen.add(userName);
-		if(levelTen.size() ==2){
+		if(levelTen.size() ==1){
 			GameServer gameServer;
 			Map<User, PrintWriter> playersOut = new HashMap<User, PrintWriter>();
 			Map<User, BufferedReader> playersIn = new HashMap<User, BufferedReader>();
 			String name;
-			for(int i = 0; i < 4; ){
-				if(levelTen.size()!=0)
-				name = levelTen.remove();
+			for(int i = 0; i < levelTen.size(); ){
+				if(levelTen.size()!=0) name = levelTen.remove();
 				else name = null;
 				if(name != null){
 					playersOut.put(usersOnline.get(name), usersOut.get(name));
 					playersIn.put(usersOnline.get(name), usersIn.get(name));	
 				}
 			}
+			System.out.println("OOL");
+			System.out.println(playersIn == null || playersOut == null);
 			gameServer = new GameServer(playersOut, playersIn, 10);
-			gameServer.test();
+			System.out.println("creating new level ten game");
+			//TODO possibly thread this call, I dont think it will allow more than one game to simotaniously run yet
+			gameServer.startGame();
 		}
 	}
 
@@ -144,6 +146,11 @@ public class server extends Thread {
 	public static void main(String[] args) {
 		server serv = new server();
 		serv.listen();
+	}
+	
+	private void messageClient(String msgOut){
+		out.write(msgOut + "\n");
+		out.flush();
 	}
 	
 	private String getUsername(){

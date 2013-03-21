@@ -42,11 +42,10 @@ public class OnlineProfile {
 	private void handshake() {
 		String input;
 		try {
-			out.write("CLIENT\n");
-			out.flush();
+			System.out.println("sending client");
+			messageServer("CLIENT");
 			input = in.readLine(); // get request for username
-			out.write(user.getUsername() + "\n");		
-			out.flush();
+			messageServer(user.getUsername());
 			int n = Integer.parseInt(in.readLine());
 			System.out.println(n);
 			idNumber = n;
@@ -119,17 +118,32 @@ public class OnlineProfile {
 	}
 	
 	private void rungame(){
+		System.out.println("game loading...");
 		boolean gameon = true;
-		String input;
-		while(gameon){
+		Scanner sc = new Scanner(System.in);
+		String input = null;
+		try {
+			input = in.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println(input);
+		//hardcoding amount of tries to three
+		String fromClient;
+		String response;
+		for(int i = 0; i < 3; i++){
+			System.out.print("enter guess 1: ");
+			fromClient = sc.nextLine().toLowerCase();
+			//send server the guess attempt
+			messageServer(fromClient);
 			try {
-				input = in.readLine();
-				if(input != null){
-					//TODO analyze Input
-				}
+				response = in.readLine();
+				if(response.equals("0")) System.out.println("LOSE");
+				else if(response.equals("1")) System.out.println("WIN!!");
+				else throw new IOException("illegal input from server: " + response);
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
+			}			
 		}
 	}
 	
