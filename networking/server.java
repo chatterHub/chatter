@@ -116,7 +116,7 @@ public class server extends Thread {
 				if(levelTen.size()!=0) name = levelTen.remove();
 				else name = null;
 				if(name != null){
-					System.out.println("user " + );
+					System.out.println("user ");
 					playersOut.put(usersOnline.get(name), usersOut.get(name));
 					playersIn.put(usersOnline.get(name), usersIn.get(name));	
 				}
