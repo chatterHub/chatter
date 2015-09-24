@@ -1,8 +1,0 @@
-Username: CRoller
-Password: Tihkal93
-Level: 10
-Points: 0
-Correct: 9
-Questions Incorrect: 0
-Total Questions: 0
-E-mail: collen.roller@gmail.com
